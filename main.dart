@@ -4,6 +4,7 @@ import 'GeneralInformations.dart';
 import 'History.dart';
 import 'TakePicture.dart';
 import 'statistics.dart';
+import 'package:camelapp/splash.dart';
 
 void main() {
   runApp(MyApp());
