@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'DINNextLTArabic',
       ),
       debugShowCheckedModeBanner: false,
-      home: MyHomePage(),
+      home: Splash(),
     );
   }
 }
