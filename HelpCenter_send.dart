@@ -3,8 +3,8 @@ import 'package:demo1/Widgets/CustomEndDrawer.dart';
 import 'package:flutter/material.dart';
 import 'BottomNavigator.dart';
 
-final Mainbrown = const Color.fromRGBO(137, 115, 88, 1);
-final Mainbeige = const Color.fromRGBO(230, 203, 160, 1);
+const Mainbrown = const Color.fromRGBO(137, 115, 88, 1);
+const Mainbeige = const Color.fromRGBO(255, 240, 199, 1);
 
 class HelpCenter2 extends StatefulWidget {
   const HelpCenter2({super.key});
