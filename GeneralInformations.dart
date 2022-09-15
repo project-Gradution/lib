@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:demo1/Widgets/CustomEndDrawer.dart';
 import 'BottomNavigator.dart';
 
-const Mainbrown = Color.fromRGBO(137, 115, 88, 1);
-const Mainbeige = Color.fromRGBO(230, 203, 160, 1);
+const Mainbrown = const Color.fromRGBO(137, 115, 88, 1);
+const Mainbeige = const Color.fromRGBO(255, 240, 199, 1);
 
 class GetInfoWidget extends StatefulWidget {
   const GetInfoWidget({Key? key}) : super(key: key);
