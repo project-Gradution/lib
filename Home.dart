@@ -9,8 +9,8 @@ import 'HelpCenter.dart';
 import 'package:demo1/Widgets/CustomEndDrawer.dart';
 
 
-final Mainbrown = const Color.fromRGBO(137, 115, 88, 1);
-final Mainbeige = const Color.fromRGBO(230, 203, 160, 1);
+const Mainbrown = const Color.fromRGBO(137, 115, 88, 1);
+const Mainbeige = const Color.fromRGBO(255, 240, 199, 1);
 
 class Home extends StatefulWidget {
   @override
@@ -48,7 +48,7 @@ class _HomeState extends State<Home> {
           Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/images/Background Image.png"),
+            image: AssetImage("assets/images/Best Background so far.png.png"),
             fit: BoxFit.cover,
           ),
         ),
