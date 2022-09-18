@@ -1,4 +1,8 @@
-import 'package:demo1/Widgets/CustomEndDrawer.dart';
+import 'dart:io';
+
+import 'package:path/path.dart';
+
+import 'Widgets/CustomEndDrawer.dart';
 import 'package:flutter/material.dart';
 import 'GeneralInformations.dart';
 import 'History.dart';
@@ -8,13 +12,16 @@ import 'AboutUs.dart';
 import 'HelpCenter.dart';
 import 'Home.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 const Mainbrown = const Color.fromRGBO(137, 115, 88, 1);
 const Mainbeige = const Color.fromRGBO(255, 240, 199, 1);
+var imageCounter = 0;
 
 class MyHomePage extends StatefulWidget {
   static int CurrentTab = 0;
   static Widget currentScreen = Home();
+
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -22,6 +29,55 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   static const TextStyle _textStyle = TextStyle(
       color: Colors.black45, fontSize: 16, fontWeight: FontWeight.bold);
+
+  //new functions to upload images
+  firebase_storage.FirebaseStorage storage =
+      firebase_storage.FirebaseStorage.instance;
+
+  File? _photo;
+  final ImagePicker _picker = ImagePicker();
+
+  Future imgFromGallery() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        _photo = File(pickedFile.path);
+        uploadFile();
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  Future imgFromCamera() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+
+    setState(() {
+      if (pickedFile != null) {
+        _photo = File(pickedFile.path);
+        uploadFile();
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  Future uploadFile() async {
+    if (_photo == null) return;
+    final fileName = basename(_photo!.path);
+    const destination = 'files/';
+
+    try {
+      final ref = firebase_storage.FirebaseStorage.instance
+          .ref(destination)
+          .child('image$imageCounter');
+      imageCounter++;
+      await ref.putFile(_photo!);
+    } catch (e) {
+      print('error occured');
+    }
+  }
 
 //list to switch between the 4 bottom screens
   final List<Widget> screens = [
@@ -257,7 +313,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   //open the camera on press to take a picture
                   onPressed: () {
-                    pickImage(ImageSource.camera);
+                    imgFromCamera();
+                    Navigator.of(context).pop();
                   },
                   child: const Text(
                     'من الكاميرا',
@@ -284,7 +341,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         MaterialStateProperty.all<Color>(Colors.black),
                   ),
                   onPressed: () {
-                    pickImage(ImageSource.gallery);
+                    imgFromGallery();
+                    Navigator.of(context).pop();
                   },
                   child: const Text(
                     'من ألبوم الصور',

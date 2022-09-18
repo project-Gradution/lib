@@ -1,17 +1,13 @@
-import 'package:demo1/BottomNavigator.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'GeneralInformations.dart';
-import 'History.dart';
-import 'TakePicture.dart';
-import 'statistics.dart';
 import 'package:camelapp/splash.dart';
 
-void main() {
-  runApp(MyApp());
+Future<void> main() async {
+  // new initialize firebase to the app
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(const MyApp());
 }
-
-const Mainbrown = const Color.fromRGBO(137, 115, 88, 1);
-const Mainbeige = const Color.fromRGBO(255, 240, 199, 1);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -24,7 +20,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'DINNextLTArabic',
       ),
       debugShowCheckedModeBanner: false,
-      home: Splash(),
+      home: const Splash(),
     );
   }
 }

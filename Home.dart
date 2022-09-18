@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:demo1/BottomNavigator.dart';
-import 'GeneralInformations.dart';
-import 'History.dart';
-import 'TakePicture.dart';
-import 'statistics.dart';
-import 'AboutUs.dart';
-import 'HelpCenter.dart';
-import 'package:demo1/Widgets/CustomEndDrawer.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'dart:io';
+import 'BottomNavigator.dart' as navigator;
+
+import 'package:path/path.dart';
 
 const Mainbrown = const Color.fromRGBO(137, 115, 88, 1);
 const Mainbeige = const Color.fromRGBO(255, 240, 199, 1);
@@ -20,11 +17,56 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   static const TextStyle _textStyle = TextStyle(
       color: Colors.black45, fontSize: 16, fontWeight: FontWeight.bold);
+  //new functions to upload images
+  firebase_storage.FirebaseStorage storage =
+      firebase_storage.FirebaseStorage.instance;
+
+  File? _photo;
+  final ImagePicker _picker = ImagePicker();
+
+  Future imgFromGallery() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        _photo = File(pickedFile.path);
+        uploadFile();
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  Future imgFromCamera() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+
+    setState(() {
+      if (pickedFile != null) {
+        _photo = File(pickedFile.path);
+        uploadFile();
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  Future uploadFile() async {
+    if (_photo == null) return;
+    final fileName = basename(_photo!.path);
+    const destination = 'files/';
+    var imageCounter = navigator.imageCounter;
+    try {
+      final ref = firebase_storage.FirebaseStorage.instance
+          .ref(destination)
+          .child('image$imageCounter');
+      navigator.imageCounter++;
+      await ref.putFile(_photo!);
+    } catch (e) {
+      print('error occured');
+    }
+  }
 
   //Image picker method (to open either camera or gallery to pick an image)
-  Future pickImage(ImageSource source) async {
-    final image = await ImagePicker().pickImage(source: source);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +142,7 @@ class _HomeState extends State<Home> {
                               fontFamily: 'DINNextLTArabic',
                               fontWeight: FontWeight.w400,
                             ),
-                            textAlign: TextAlign.right,
+                            textAlign: TextAlign.center,
                             textDirection: TextDirection.rtl,
                           ),
                         ),
@@ -134,8 +176,8 @@ class _HomeState extends State<Home> {
         builder: (BuildContext bc) {
           return Container(
             height: 300,
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.only(
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(10), topRight: Radius.circular(10)),
               color: Mainbrown,
             ),
@@ -164,7 +206,8 @@ class _HomeState extends State<Home> {
                   ),
                   //open the camera on press to take a picture
                   onPressed: () {
-                    pickImage(ImageSource.camera);
+                    imgFromCamera();
+                    Navigator.of(context).pop();
                   },
                   child: const Text(
                     'من الكاميرا',
@@ -191,7 +234,8 @@ class _HomeState extends State<Home> {
                         MaterialStateProperty.all<Color>(Colors.black),
                   ),
                   onPressed: () {
-                    pickImage(ImageSource.gallery);
+                    imgFromGallery();
+                    Navigator.of(context).pop();
                   },
                   child: const Text(
                     'من ألبوم الصور',
