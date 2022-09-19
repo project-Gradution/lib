@@ -1,5 +1,6 @@
-import 'package:camelapp/Home.dart';
 import 'package:flutter/material.dart';
+
+import 'BottomNavigator.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -18,12 +19,11 @@ class _SplashState extends State<Splash> {
   _navigatetohome() async {
     await Future.delayed(const Duration(milliseconds: 3000), () {});
     Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) => const MyHomePage(
-                  title: '',
-                )));
+        context, MaterialPageRoute(builder: (context) => MyHomePage()));
   }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class _SplashState extends State<Splash> {
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          color: Color.fromARGB(255, 229, 208, 174),
+          color: const Color.fromARGB(255, 229, 208, 174),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
