@@ -1,10 +1,12 @@
 # lib
 
-new update 18/9
+new update 26/9
 upload the images to the database
 updated files:
 main.dart,
 Home.dart,
 BottomNavigator.dart,
+amplifyConfigration
+
 
 
