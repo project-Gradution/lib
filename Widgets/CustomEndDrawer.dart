@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:demo1/BottomNavigator.dart';
-import 'package:demo1/GeneralInformations.dart';
-import 'package:demo1/History.dart';
-import 'package:demo1/TakePicture.dart';
-import 'package:demo1/statistics.dart';
-import 'package:demo1/AboutUs.dart';
-import 'package:demo1/HelpCenter.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../AboutUs.dart';
+import '../BottomNavigator.dart';
+import '../GeneralInformations.dart';
+import '../HelpCenter.dart';
+import '../History.dart';
+import '../TakePicture.dart';
+import '../statistics.dart';
+
 const Mainbrown = Color.fromRGBO(137, 115, 88, 1);
-const Mainbeige = Color.fromRGBO(230, 203, 160, 1);
+const Mainbeige = const Color.fromRGBO(255, 240, 199, 1);
 
 class CustomEndDrawer extends StatelessWidget {
   const CustomEndDrawer({
@@ -29,44 +31,8 @@ class CustomEndDrawer extends StatelessWidget {
       backgroundColor: Mainbrown,
       child: ListView(
         children: <Widget>[
-          //identfy camel option (class takePicture)
           SizedBox(height: 30),
-          Card(
-            elevation: 0,
-            color: Colors.transparent,
-            child: ListTile(
-              minVerticalPadding: 10,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),
-                    topRight: Radius.circular(10),
-                    bottomRight: Radius.circular(10)),
-              ),
-              tileColor: Mainbeige,
-              title: const Text(
-                "تعرف على جمل",
-                style: TextStyle(fontSize: 20, fontFamily: 'DINNextLTArabic'),
-                textAlign: TextAlign.right,
-              ),
-              trailing: const Icon(
-                Icons.search,
-                color: Colors.black,
-                size: 35,
-              ),
-              onTap: () {
-                //close navigator drawer before
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) => TakePicture()),
-                );
-              },
-            ),
-          ),
           //view Statistics page (class statistics)
-          SizedBox(height: 5),
           Card(
             elevation: 0,
             color: Colors.transparent,
